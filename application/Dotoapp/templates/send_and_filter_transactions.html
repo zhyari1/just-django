@@ -1,0 +1,100 @@
+<!-- send_and_filter_transactions.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Send and Filter Transactions</title>
+</head>
+<body>
+    <h2>Send Transaction</h2>
+    <form method="post">
+        {% csrf_token %}
+        <label for="id_sender_account">Sender Account:</label>
+        <input type="text" name="sender_account" id="id_sender_account" required><br>
+
+        <label for="id_receiver_account">Receiver Account:</label>
+        <input type="text" name="receiver_account" id="id_receiver_account" required><br>
+
+        <label for="id_amount">Amount:</label>
+        <input type="number" name="amount" id="id_amount" step="0.01" required><br>
+
+        <label for="id_description">Description:</label>
+        <input type="text" name="description" id="id_description"><br>
+
+        <label for="id_transaction_type">Transaction Type:</label>
+        <select name="transaction_type" id="id_transaction_type">
+            {% for value, label in send_form.fields.transaction_type.choices %}
+                <option value="{{ value }}">{{ label }}</option>
+            {% endfor %}
+        </select><br>
+
+        <label for="id_category">Category:</label>
+        <input type="text" name="category" id="id_category"><br>
+
+        <label for="id_date">Date:</label>
+        <input type="date" name="date" id="id_date"><br>
+
+        <button type="submit">Send</button>
+    </form>
+
+    <h2>Filter Transactions</h2>
+    <form method="get">
+        <label for="id_sender_account_filter">Sender Account:</label>
+        <input type="text" name="sender_account" id="id_sender_account_filter"><br>
+
+        <label for="id_receiver_account_filter">Receiver Account:</label>
+        <input type="text" name="receiver_account" id="id_receiver_account_filter"><br>
+
+        <label for="id_amount_min">Min Amount:</label>
+        <input type="number" name="amount_min" id="id_amount_min" step="0.01"><br>
+
+        <label for="id_amount_max">Max Amount:</label>
+        <input type="number" name="amount_max" id="id_amount_max" step="0.01"><br>
+
+        <label for="id_transaction_type_filter">Transaction Type:</label>
+        <select name="transaction_type" id="id_transaction_type_filter">
+            <option value="">All</option>
+            {% for value, label in filter_form.fields.transaction_type.choices %}
+                <option value="{{ value }}">{{ label }}</option>
+            {% endfor %}
+        </select><br>
+
+        <label for="id_category_filter">Category:</label>
+        <input type="text" name="category" id="id_category_filter"><br>
+
+        <label for="id_description_filter">Description:</label>
+        <input type="text" name="description" id="id_description_filter"><br>
+
+        <label for="id_start_date">Start Date:</label>
+        <input type="date" name="start_date" id="id_start_date"><br>
+
+        <label for="id_end_date">End Date:</label>
+        <input type="date" name="end_date" id="id_end_date"><br>
+
+        <button type="submit">Filter</button>
+    </form>
+
+    <h2>Filtered Transactions</h2>
+    <table>
+        <tr>
+            <th>Sender Account</th>
+            <th>Receiver Account</th>
+            <th>Amount</th>
+            <th>Description</th>
+            <th>Transaction Type</th>
+            <th>Category</th>
+            <th>Date</th>
+        </tr>
+        {% for transaction in transactions %}
+        <tr>
+            <td>{{ transaction.sender_account }}</td>
+            <td>{{ transaction.receiver_account }}</td>
+            <td>{{ transaction.amount }}</td>
+            <td>{{ transaction.description }}</td>
+            <td>{{ transaction.get_transaction_type_display }}</td>
+            <td>{{ transaction.category }}</td>
+            <td>{{ transaction.date }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
