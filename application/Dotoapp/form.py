@@ -6,7 +6,7 @@ class SendTransactionForm(forms.ModelForm):
         model = Transaction
         fields = ['amount', 'description', 'transaction_type', 'category', 'date']  # Remove 'sender_account' and 'receiver_account'
 
-class TransactionFilterForm(forms.Form):
+class TransactionFilterForm(forms.Form):   # What is reason for this  here
     sender_account = forms.CharField(max_length=100, required=False)
     receiver_account = forms.CharField(max_length=100, required=False)
     amount_min = forms.DecimalField(required=False, decimal_places=2, max_digits=10, label='Min Amount')

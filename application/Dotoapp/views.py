@@ -6,7 +6,7 @@ from .form  import TransactionFilterForm
 from .filter import TransactionFilter
 from django.http import HttpResponse
 
-def your_view(request):
+def transactions(request):  # naming
     if request.method == 'POST':
         form = TransactionFilterForm(request.POST)
         if form.is_valid():
@@ -35,7 +35,7 @@ def your_view(request):
             for transaction in transactions:
                 transaction.save()
 
-            return redirect('your_success_url')  # Redirect to success page
+            return redirect('transactions-list')  # Redirect to success page
     else:
         form = TransactionFilterForm()
 
