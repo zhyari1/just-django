@@ -30,6 +30,8 @@ def your_view(request):
                 transactions = transactions.filter(amount__gte=amount_min)
             if amount_max:
                 transactions = transactions.filter(amount__lte=amount_max)
+                
+            
 
             # Insert data into the database
             for transaction in transactions:
